@@ -3,12 +3,12 @@ const core = require('@actions/core');
 const exec = require("@actions/exec");
 const http = require('@actions/http-client');
 
-const client = new http.HttpClient()
+const client = new http.HttpClient("action-zeet")
 
 async function getBinaryURL() {
-  const res = await client.get("https://api.github.com/repos/zeet-dev/cli/releases/latest")
-  const body = await res.readBody()
-  const obj = JSON.parse(body)
+  const res = await client.get("https://api.github.com/repos/zeet-dev/cli/releases/latest");
+  const body = await res.readBody();
+  const obj = JSON.parse(body);
 
   let url;
   if (process.platform === "linux") {
