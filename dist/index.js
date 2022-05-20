@@ -6259,15 +6259,30 @@ async function getBinaryURL() {
   const body = await res.readBody();
   const obj = JSON.parse(body);
 
+  let arch;
+  if (process.arch === "arm") {
+    arch = "armv6";
+  }
+  if (process.arch === "arm64") {
+    arch = "arm64";
+  }
+  if (process.arch === "x64") {
+    arch = "x86_64";
+  }
+
   let asset;
   if (process.platform === "linux") {
-    asset = obj.assets.find(a => a.name.includes("linux"));
+    asset = obj.assets.find(a => a.name.includes(`linux_${arch}`));
   }
   if (process.platform === "win32") {
-    asset = obj.assets.find(a => a.name.includes("windows"));
+    asset = obj.assets.find(a => a.name.includes(`windows_${arch}`));
   }
   if (process.platform === "darwin") {
-    asset = obj.assets.find(a => a.name.includes("darwin"));
+    asset = obj.assets.find(a => a.name.includes(`darwin_${arch}`));
+  }
+
+  if (!asset) {
+    throw new Error("Asset for the OS/arch not found")
   }
 
   return [asset.browser_download_url, obj.tag_name];
