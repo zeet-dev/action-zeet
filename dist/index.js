@@ -13762,8 +13762,12 @@ async function run() {
       core.addPath(cachedPath);
     }
 
+    // Configure api url
+    const apiURL = core.getInput('api_url', { required: true });
+    await exec.exec('zeet', ['config:set', `server=${apiURL}`]);
+
     const token = core.getInput('token', { required: true });
-    await exec.exec('zeet login -t', [token]);
+    await exec.exec('zeet', ['login', `--token=${token}`, `--server=${apiURL}`]);
 
     core.info("Done!");
   } catch (error) {
