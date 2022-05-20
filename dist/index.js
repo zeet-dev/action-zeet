@@ -6252,12 +6252,12 @@ const core = __nccwpck_require__(186);
 const exec = __nccwpck_require__(514);
 const http = __nccwpck_require__(255);
 
-const client = new http.HttpClient()
+const client = new http.HttpClient("action-zeet")
 
 async function getBinaryURL() {
-  const res = await client.get("https://api.github.com/repos/zeet-dev/cli/releases/latest")
-  const body = await res.readBody()
-  const obj = JSON.parse(body)
+  const res = await client.get("https://api.github.com/repos/zeet-dev/cli/releases/latest");
+  const body = await res.readBody();
+  const obj = JSON.parse(body);
 
   let url;
   if (process.platform === "linux") {
