@@ -1,13 +1,13 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Github Action for the Zeet CLI'
+description: 'Automatically loads the Zeet CLI into your Actions environment'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  token:
+    description: 'Zeet API Token (from https://zeet.co/account/api)'
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  api_url:
+    description: "Zeet API URL"
+    required: false
+    default: "https://anchor.zeet.co"
 runs:
   using: 'node16'
   main: 'dist/index.js'

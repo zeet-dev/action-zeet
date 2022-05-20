@@ -1,13 +1,12 @@
 {
-  "name": "javascript-action",
-  "version": "1.0.0",
-  "description": "JavaScript Action Template",
+  "name": "zeet-cli-action",
+  "version": "0.1",
+  "description": "Action for loading the Zeet CLI into an Actions environment",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
     "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
-    "test": "jest",
-    "all": "npm run lint && npm run prepare && npm run test"
+    "all": "npm run lint && npm run prepare"
   },
   "repository": {
     "type": "git",
@@ -16,16 +15,19 @@
   "keywords": [
     "GitHub",
     "Actions",
-    "JavaScript"
+    "Zeet"
   ],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/actions/javascript-action/issues"
+    "url": "https://github.com/zeet-dev/cli-action/issues"
   },
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "homepage": "https://github.com/zeet-dev/cli-action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.5"
+    "@actions/core": "^1.2.5",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.0.3",
+    "@actions/tool-cache": "^2.0.1"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.31.1",
