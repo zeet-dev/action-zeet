@@ -1,28 +1,27 @@
-const github = require('@actions/github');
 const tc = require('@actions/tool-cache');
 const core = require('@actions/core');
-const exec = require("@actions/exec")
+const exec = require("@actions/exec");
+const http = require('@actions/http-client');
 
-const octokit = github.getOctokit(github.context.token)
+const client = new http.HttpClient()
 
 async function getBinaryURL() {
-  const res = await octokit.rest.repos.getLatestRelease({
-    owner: "zeet-dev",
-    repo: "cli",
-  });
+  const res = await client.get("https://api.github.com/repos/zeet-dev/cli/releases/latest")
+  const body = await res.readBody()
+  const obj = JSON.parse(body)
 
   let url;
   if (process.platform === "linux") {
-    url = res.data.assets.find(a => a.name.includes("linux"));
+    url = obj.assets.find(a => a.name.includes("linux"));
   }
   if (process.platform === "win32") {
-    url = res.data.assets.find(a => a.name.includes("windows"));
+    url = obj.assets.find(a => a.name.includes("windows"));
   }
   if (process.platform === "darwin") {
-    url = res.data.asets.find(a => a.name.includes("darwin"));
+    url = obj.assets.find(a => a.name.includes("darwin"));
   }
 
-  return [url, res.data.tag_name];
+  return [url, obj.tag_name];
 }
 
 async function downloadBinary(url) {
