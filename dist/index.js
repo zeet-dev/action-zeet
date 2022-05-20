@@ -6291,7 +6291,7 @@ async function run() {
   try {
     const [binaryURL, tagName] = await getBinaryURL();
 
-    core.debug("Downloading " + binaryURL)
+    core.info("Downloading " + binaryURL)
 
     if (!tc.find("zeet", tagName)) {
       const binaryPath = await downloadBinary(binaryURL)
