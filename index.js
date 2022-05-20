@@ -10,18 +10,18 @@ async function getBinaryURL() {
   const body = await res.readBody();
   const obj = JSON.parse(body);
 
-  let url;
+  let asset;
   if (process.platform === "linux") {
-    url = obj.assets.find(a => a.name.includes("linux"));
+    asset = obj.assets.find(a => a.name.includes("linux"));
   }
   if (process.platform === "win32") {
-    url = obj.assets.find(a => a.name.includes("windows"));
+    asset = obj.assets.find(a => a.name.includes("windows"));
   }
   if (process.platform === "darwin") {
-    url = obj.assets.find(a => a.name.includes("darwin"));
+    asset = obj.assets.find(a => a.name.includes("darwin"));
   }
 
-  return [url, obj.tag_name];
+  return [asset.browser_download_url, obj.tag_name];
 }
 
 async function downloadBinary(url) {
