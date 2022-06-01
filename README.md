@@ -1,4 +1,8 @@
 ## Zeet for Github Actions
+
+> If you're looking to deploy or run a command on your project in Actions, check out [zeet-co/zeet-deploy-action](https://github.com/zeet-co/zeet-deploy-action)
+> and [zeet-co/zeet-run-action](https://github.com/zeet-co/zeet-run-action), which are built on this Action.
+
 This action downloads the [Zeet CLI](https://github.com/zeet-dev/cli) into a workflow.
 
 ### Usage
