@@ -70,7 +70,7 @@ async function run() {
     await exec.exec('zeet', ['config:set', `server=${apiURL}`]);
 
     const token = core.getInput('token', { required: true });
-    await exec.exec('zeet', ['login', `--token=${token}`]);
+    await exec.exec('zeet', ['login', '--overwrite', `--token=${token}`]);
 
     core.info("Done!");
   } catch (error) {
