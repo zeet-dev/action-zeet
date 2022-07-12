@@ -3,7 +3,7 @@ description: 'Automatically loads the Zeet CLI into your Actions environment'
 inputs:
   token:
     description: 'Zeet API Token (from https://zeet.co/account/api)'
-    required: true
+    required: false
   api_url:
     description: "Zeet API URL"
     required: false
