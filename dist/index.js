@@ -6254,10 +6254,21 @@ const http = __nccwpck_require__(255);
 
 const client = new http.HttpClient("action-zeet")
 
-async function getBinaryURL() {
-  const res = await client.get("https://api.github.com/repos/zeet-dev/cli/releases/latest");
+async function getLatestRelease(prerelease) {
+  const res = await client.get("https://api.github.com/repos/zeet-dev/cli/releases");
   const body = await res.readBody();
-  const obj = JSON.parse(body);
+  const obj = JSON.parse(body).filter(i => i.assets && i.assets.length > 0);
+
+  const first = obj[0]
+  if (first.prerelease && prerelease) {
+    return first;
+  } else {
+    return obj.find(i => !i.prerelease);
+  }
+}
+
+async function getBinaryURL(prerelease) {
+  const obj = await getLatestRelease(prerelease);
 
   let arch;
   if (process.arch === "arm") {
@@ -6304,7 +6315,7 @@ async function downloadBinary(url) {
 
 async function run() {
   try {
-    const [binaryURL, tagName] = await getBinaryURL();
+    const [binaryURL, tagName] = await getBinaryURL(core.getBooleanInput("allow_prereleases"));
 
     core.info("Downloading " + binaryURL)
 
@@ -6318,14 +6329,15 @@ async function run() {
     const apiURL = core.getInput('api_url', { required: true });
     await exec.exec('zeet', ['config:set', `server=${apiURL}`]);
 
-    const token = core.getInput('token', { required: true });
-    await exec.exec('zeet', ['login', '--overwrite', `--token=${token}`]);
+    const token = core.getInput('token');
+    if (token) {
+      await exec.exec('zeet', ['login', '--overwrite', `--token=${token}`]);
+    }
 
     core.info("Done!");
   } catch (error) {
     core.setFailed(error.message);
   }
-
 }
 
 run();

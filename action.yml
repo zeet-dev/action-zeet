@@ -1,13 +1,17 @@
-name: 'Github Action for the Zeet CLI'
-description: 'Automatically loads the Zeet CLI into your Actions environment'
+name: "Github Action for the Zeet CLI"
+description: "Loads the Zeet CLI into your Actions environment"
 inputs:
   token:
-    description: 'Zeet API Token (from https://zeet.co/account/api)'
+    description: "Zeet API Token (from https://zeet.co/account/api)"
     required: false
   api_url:
     description: "Zeet API URL"
     required: false
     default: "https://anchor.zeet.co"
+  allow_prereleases:
+    description: "If the latest version of the CLI is a prerelease, use it"
+    required: false
+    default: "false"
 runs:
   using: 'node16'
   main: 'dist/index.js'
