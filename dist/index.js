@@ -6327,7 +6327,7 @@ async function run() {
 
     // Configure api url
     const apiURL = core.getInput('api_url', { required: true });
-    await exec.exec('zeet', ['config:set', `server=${apiURL}`]);
+    await exec.exec('zeet', ['config:set', `api-url=${apiURL}`]);
 
     const token = core.getInput('token');
     if (token) {
